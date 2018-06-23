@@ -1,0 +1,52 @@
+{{!-- <div id="wrapper">
+    <h1>News Scraper</h1>
+    <h2>
+        <i>Browse, bookmark, comment.</i>
+    </h2>
+    <div id="articles"></div>
+    <div id="notes"></div>
+</div> --}}
+<header>
+	<a href="/"><h1 id="sitename">Chicago News Scraper</h1></a>
+    <h2>
+        <i>Browse, bookmark, comment.</i>
+    </h2>
+	<a href="/"><button id="all-articles">All Articles</button></a>
+	<a href="/saved"><button id="saved-articles">Saved Articles</button></a>
+	<form action="/scrape" method="GET">
+		<button type="submit" id="refresh-articles">Scrape For Newest Articles</button>
+	</form>
+</header>
+
+{{#each articles}}
+<div class="story-body" id={{this._id}}>
+    <h2>
+        <a href="{{this.link}}" target="_blank">{{this.title}}</a>
+        <form action="/save/{{this._id}}" method="POST">
+            <button type="button" class="save-article-btn" value="{{this._id}}">Save Article</button>
+            {{#unless this.note}}
+                <button type="button" class="addnote-button" value="{{this._id}}">Add A Note</button>
+            {{/unless}}
+            {{#if this.note}}
+                <button type="button" class="addnote-button" value="{{this._id}}">Edit Note</button>
+            {{/if}}
+        </form>
+    </h2>
+    <summary>{{this.summary}}</summary>
+</div>
+{{/each}}
+
+<div id="addnote">
+	<div id="note-displayer">
+		<h2>Note</h2>
+		<h3>Article: <span id="article-title"></span></h3>
+		<div id="note">
+			<label for="note-title">Title</label><br>
+			<input type="text" placeholder="Title" name="title" id="note-title"><br>
+			<label for="note-body">Note</label><br>
+			<textarea rows="7" placeholder="Note" id="note-body"></textarea><br>
+			<button type="submit" id="add-note">Save Note</button>
+			<button type="button" id="close-note">Cancel</button>
+		</div>
+	</div>
+</div>
